@@ -1,7 +1,7 @@
 import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar';
+import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
@@ -13,12 +13,16 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import Login from '../Login/Login';
+import ThemeToggleButton from '../ThemeToggleButton'
+import { useMediaQuery } from '@mui/material'
 
 const pages = ['Products', 'Pricing', 'Blog']
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+export type HeaderProps = {
+    ColorModeContext: React.Context<{ toggleColorMode: () => void }>,
+}
 
-const Header = () => {
+const Header = (props: HeaderProps) => {
+    const { ColorModeContext } = props
     const { data: session } = useSession()
     const userProfileImg = session?.user?.image as string
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
@@ -38,6 +42,7 @@ const Header = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
     };
+    const tabletCheck = useMediaQuery("(min-width: 768px)")
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -58,7 +63,7 @@ const Header = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        DataDash
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -114,7 +119,7 @@ const Header = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        DataDash
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -127,8 +132,13 @@ const Header = () => {
                             </Button>
                         ))}
                     </Box>
-
-                    <Box sx={{ paddingRight: 5 }} ><Typography> Signed in as {session?.user?.email}</Typography></Box>
+                    {
+                        tabletCheck && (
+                            <Box sx={{ paddingRight: 5 }} >
+                                <Typography> Signed in as {session?.user?.email}</Typography>
+                            </Box>)
+                    }
+                    <ThemeToggleButton ColorModeContext={ColorModeContext} />
                     <Box sx={{ flexGrow: 0 }}>
 
                         <Tooltip title="Profile settings">
