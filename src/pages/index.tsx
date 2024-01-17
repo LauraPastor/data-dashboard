@@ -19,13 +19,9 @@ const Home: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={scss.main} >
-        {session && (
-          <>
-            <SideMenu />
-            <Dashboard />
-          </>
-        )}
-        <Login />
+        <SideMenu />
+        {session && <Dashboard />}
+        {!session && <Login />}
       </main>
     </>
   )
