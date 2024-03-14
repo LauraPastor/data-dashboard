@@ -27,7 +27,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "src/components/Dashboard/DataRibbon"
   ],
   "exclude": [
     "node_modules"
