@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react'
 import scss from './Layout.module.scss'
 import SideMenu from '../SideMenu'
 import Head from 'next/head'
+import Footer from '../Footer'
 
 const Layout = (props: any) => {
     const { data: session } = useSession()
@@ -17,6 +18,7 @@ const Layout = (props: any) => {
             <main className={scss.layout} style={{ padding: session ? "0 24px 0 80px" : 0 }}>
                 {session && <SideMenu />}
                 {props.children}
+                <Footer />
             </main>
         </>
     )
